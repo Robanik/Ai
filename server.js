@@ -1,13 +1,13 @@
-const express = require("express");
-const fetch = require("node-fetch"); // npm install node-fetch
-const cors = require("cors");
+import express from "express";
+import fetch from "node-fetch";
+import cors from "cors";
 
 const app = express();
-app.use(cors()); // разрешаем запросы с любого фронта
+app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY; // ключ хранится в переменной окружения
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 app.post("/chat", async (req, res) => {
   const { message } = req.body;
