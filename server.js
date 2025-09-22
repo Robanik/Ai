@@ -22,7 +22,7 @@ app.post("/chat", async (req, res) => {
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
         messages: [
-          { role: "system", content: "Ты дружелюбный и умный чат-бот. Отвечай понятно и с юмором." },
+          { role: "system", content: "Ты дружелюбный и умный чат-бот." },
           { role: "user", content: message }
         ],
         max_tokens: 150
@@ -30,6 +30,14 @@ app.post("/chat", async (req, res) => {
     });
 
     const data = await response.json();
+    console.log("Ответ OpenAI:", data);
+
+    if (!data.choices || data.choices.length === 0) {
+      console.error("OpenAI вернул пустой ответ или ошибку:", data);
+      res.status(500).json({ reply: "Ошибка сервера 😅" });
+      return;
+    }
+
     const botReply = data.choices[0].message.content.trim();
     res.json({ reply: botReply });
 
@@ -38,19 +46,3 @@ app.post("/chat", async (req, res) => {
     res.status(500).json({ reply: "Ошибка сервера 😅" });
   }
 });
-
-app.listen(PORT, () => {
-  console.log(`Сервер запущен на порту ${PORT}`);
-});
-
-const data = await response.json();
-console.log("Ответ OpenAI:", data); // Логируем, что реально пришло
-
-// Проверяем, что choices существует и массив не пустой
-if (!data.choices || data.choices.length === 0) {
-  console.error("OpenAI вернул пустой ответ или ошибку:", data);
-  return res.status(500).json({ reply: "Ошибка сервера 😅" });
-}
-
-const botReply = data.choices[0].message.content.trim();
-res.json({ reply: botReply });
