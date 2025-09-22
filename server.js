@@ -1,14 +1,13 @@
-// server.js
 const express = require("express");
 const fetch = require("node-fetch"); // npm install node-fetch
 const cors = require("cors");
 
 const app = express();
-app.use(cors());
+app.use(cors()); // разрешаем запросы с любого фронта
 app.use(express.json());
 
-const PORT = 3000;
-const OPENAI_API_KEY = "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"; // вставь свой ключ
+const PORT = process.env.PORT || 3000;
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY; // ключ хранится в переменной окружения
 
 app.post("/chat", async (req, res) => {
   const { message } = req.body;
@@ -23,7 +22,7 @@ app.post("/chat", async (req, res) => {
       body: JSON.stringify({
         model: "gpt-3.5-turbo",
         messages: [
-          { role: "system", content: "Ты дружелюбный чат-бот, отвечай понятно и с юмором." },
+          { role: "system", content: "Ты дружелюбный и умный чат-бот. Отвечай понятно и с юмором." },
           { role: "user", content: message }
         ],
         max_tokens: 150
@@ -41,5 +40,5 @@ app.post("/chat", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Сервер запущен на http://localhost:${PORT}`);
+  console.log(`Сервер запущен на порту ${PORT}`);
 });
