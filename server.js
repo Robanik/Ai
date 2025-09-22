@@ -42,3 +42,6 @@ app.post("/chat", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}`);
 });
+
+const data = await response.json();
+console.log("Ответ OpenAI:", data);
