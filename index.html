@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Браузерный Бот</title>
+  <title>Умный Бот</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -67,6 +67,10 @@
       color: #000;
       align-self: flex-start;
     }
+    .typing {
+      font-style: italic;
+      color: #555;
+    }
   </style>
 </head>
 <body>
@@ -79,7 +83,7 @@
   </div>
 </div>
 
-<!-- Подключаем файл с данными бота -->
+<!-- Подключаем файл с OpenAI API -->
 <script src="dann.js"></script>
 <script>
   const chatMessages = document.getElementById('chatMessages');
@@ -93,17 +97,29 @@
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 
-  function sendMessage() {
+  async function sendMessage() {
     const message = userInput.value.trim();
     if (!message) return;
+
     addMessage(message, 'user-message');
-    const botReply = getBotResponse(message);
-    addMessage(botReply, 'bot-message');
     userInput.value = '';
     userInput.focus();
+
+    // Показать "бот печатает..."
+    const typingMsg = document.createElement('div');
+    typingMsg.className = 'chat-message bot-message typing';
+    typingMsg.innerText = "Бот печатает...";
+    chatMessages.appendChild(typingMsg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    const botReply = await getBotResponse(message);
+
+    // Удаляем "печатает..."
+    chatMessages.removeChild(typingMsg);
+
+    addMessage(botReply, 'bot-message');
   }
 
-  // Отправка по Enter
   userInput.addEventListener('keypress', function(e) {
     if (e.key === 'Enter') sendMessage();
   });
