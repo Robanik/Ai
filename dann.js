@@ -1,13 +1,13 @@
 // dann.js
-// Важно: вставь свой ключ OpenAI в переменную apiKey
+// Вставь сюда свой API ключ OpenAI
 const apiKey = "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";
 
-// Функция для получения ответа от OpenAI
+// Функция получения ответа от OpenAI
 async function getBotResponse(message) {
   const url = "https://api.openai.com/v1/chat/completions";
 
   const data = {
-    model: "gpt-3.5-turbo", // можно заменить на gpt-4, если есть доступ
+    model: "gpt-3.5-turbo",
     messages: [
       { role: "system", content: "Ты дружелюбный и умный чат-бот. Отвечай кратко, понятно и с юмором, если уместно." },
       { role: "user", content: message }
