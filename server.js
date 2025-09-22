@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 // Порт от Render
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 // Ключ OpenAI из переменных окружения Render
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
