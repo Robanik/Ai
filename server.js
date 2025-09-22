@@ -44,4 +44,13 @@ app.listen(PORT, () => {
 });
 
 const data = await response.json();
-console.log("Ответ OpenAI:", data);
+console.log("Ответ OpenAI:", data); // Логируем, что реально пришло
+
+// Проверяем, что choices существует и массив не пустой
+if (!data.choices || data.choices.length === 0) {
+  console.error("OpenAI вернул пустой ответ или ошибку:", data);
+  return res.status(500).json({ reply: "Ошибка сервера 😅" });
+}
+
+const botReply = data.choices[0].message.content.trim();
+res.json({ reply: botReply });
