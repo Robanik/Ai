@@ -1,6 +1,6 @@
 // dann.js
-// URL сервера, где развернут server.js
-const SERVER_URL = "https://твой-сервер/render/chat";
+// Указываем URL сервера Render + путь /chat
+const SERVER_URL = "https://ai-0s0h.onrender.com/chat";
 
 async function getBotResponse(message) {
   try {
